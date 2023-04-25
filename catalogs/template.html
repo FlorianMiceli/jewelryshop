@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <header>
+        <img src="https://user-images.githubusercontent.com/103659071/234357295-4a152213-161e-4e9d-9bda-73d9d056dbde.jpg" alt="Logo" style="display: block; margin: 1 auto;" width="70">
+        <h1 style="text-align: center;">{{ title }}</h1>
+      </header>
+    <table>
+        <thead>
+            <tr>
+                {% for header in headers %}
+                <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
