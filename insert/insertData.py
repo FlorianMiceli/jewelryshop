@@ -21,7 +21,6 @@ pg_user = os.getenv('PG_USERNAME')
 pg_password = os.getenv('PG_USERNAME')
 
 def insertIntoDBfromXLSX(XLSXfilename, conn):
-    os.chdir('jewelryshop/insert/dataToInsert')
     f = pd.read_excel(f'{XLSXfilename}.xlsx')
     cur = conn.cursor()
     for row in f.iterrows():
@@ -29,7 +28,6 @@ def insertIntoDBfromXLSX(XLSXfilename, conn):
         request = f'INSERT INTO {f.columns[0]} ({attributes}) VALUES {tuple(row[1][1:])}'
         print(request)
         cur.execute(request)
-    conn.commit()
     cur.close()
 
 def insertIntoDBfromMultipleXLSX(filesList, conn):
@@ -55,6 +53,10 @@ with SSHTunnelForwarder(
     )
     print('connection open')
 
-    insertIntoDBfromXLSX('chaines2022', conn)
+    to_insert = ['chaines2022', 'colliers2022', 'perles2022']
 
+    os.chdir('jewelryshop/insert/dataToInsert')
+    insertIntoDBfromMultipleXLSX(to_insert, conn)
+
+    conn.commit()
     conn.close()

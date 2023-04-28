@@ -5,3 +5,7 @@
 + Utilisez la fonction insertIntoDBfromXLSX(XLSXfilename, conn) pour faire vos requetes
 	+ XLSXfilename : nom du fichier 
 	+ conn : voir requestExample.py
+
++ Utilisez la fonction insertIntoDBfromMultipleXLSX(to_insert, conn) pour faire vos requetes à partir de plusieurs fichiers
+	+ to_insert : liste des noms des fichiers
+	+ conn : voir requestExample.py
