@@ -25,7 +25,9 @@ def insertIntoDBfromXLSX(XLSXfilename, conn):
     cur = conn.cursor()
     for row in f.iterrows():
         attributes = ','.join(tuple(f.columns[1:]))
-        request = f'INSERT INTO {f.columns[0]} ({attributes}) VALUES {tuple(row[1][1:])}'
+        values = tuple(row[1][1:])
+        request = f'INSERT INTO {f.columns[0]} ({attributes}) VALUES {values}'.replace(' nan,', ' NULL,')
+
         print(request)
         cur.execute(request)
     cur.close()
@@ -52,10 +54,20 @@ with SSHTunnelForwarder(
         sslmode='disable',
     )
     print('connection open')
-
-    to_insert = ['chaines2022', 'colliers2022', 'perles2022']
-
     os.chdir('jewelryshop/insert/dataToInsert')
+
+    # 2022
+    to_insert = ['chaines2022', 'colliers2022', 'perles2022', 'pendentifs']
+    insertIntoDBfromMultipleXLSX(to_insert, conn)
+
+    # inflation 
+    cur = conn.cursor()
+    cur.execute("UPDATE COLLIERS SET prixCollier = prixCollier*1.12 WHERE typeProduit = 'collier';")
+    cur.execute("UPDATE PERLES SET prixPerle = prixPerle*1.12 WHERE typeProduit = 'perle';")
+    cur.execute("UPDATE CHAINES SET prixChaine = prixChaine*1.12 WHERE typeProduit = 'chaine';")
+
+    # 2023
+    to_insert = ['chaines2023', 'colliers2023', 'perles2023', 'pendentifs2']
     insertIntoDBfromMultipleXLSX(to_insert, conn)
 
     conn.commit()
