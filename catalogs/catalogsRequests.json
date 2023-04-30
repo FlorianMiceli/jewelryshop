@@ -1,0 +1,3 @@
+{
+    "Catalogue Résumé" : "SELECT CASE WHEN c.NomCollier = lag(c.NomCollier) OVER (ORDER BY c.idcollier) THEN '' ELSE c.NomCollier END AS NomCollier, CASE WHEN ch.NomChaine = lag(ch.NomChaine) OVER (ORDER BY c.idcollier) THEN '' ELSE ch.NomChaine END AS NomChaine, nbPerle, NomPerle, CASE WHEN c.PrixCollier = lag(c.PrixCollier) OVER (ORDER BY c.idcollier) THEN NULL ELSE c.PrixCollier END AS PrixCollier FROM colliers AS c JOIN pendentifs AS p ON p.idCollier = c.idCollier AND p.Nomproduit = c.typeProduit JOIN Perles AS po ON p.idPerle = po.idPerle AND p.typeProduit = po.typeProduit JOIN Chaines AS ch ON c.idChaine = ch.idChaine AND ch.typeProduit = c.NomProduit ORDER BY c.idcollier ASC;"
+}

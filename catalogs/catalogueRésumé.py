@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from jinja2 import Template
 from xhtml2pdf import pisa
+import json 
 
 # creds
 ssh_host = 'ssh2.pgip.universite-paris-saclay.fr'
@@ -18,6 +19,9 @@ pg_port = 5432
 pg_database = os.getenv('PG_USERNAME')
 pg_user = os.getenv('PG_USERNAME')
 pg_password = os.getenv('PG_USERNAME')
+
+# catalog to generate
+title = 'Catalogue Résumé'
 
 # connexion SSH
 with SSHTunnelForwarder(
@@ -37,36 +41,31 @@ with SSHTunnelForwarder(
         sslmode='disable',
     )
     print('connection open')
-    
-    cur = conn.cursor()
-    cur.execute('''
-        SELECT 
-            CASE WHEN c.NomCollier = lag(c.NomCollier) OVER (ORDER BY c.idcollier) THEN '' ELSE c.NomCollier END AS NomCollier, 
-            CASE WHEN ch.NomChaine = lag(ch.NomChaine) OVER (ORDER BY c.idcollier) THEN '' ELSE ch.NomChaine END AS NomChaine, 
-            nb_Perle, 
-            NomPerle, 
-            CASE WHEN c.PrixCollier = lag(c.PrixCollier) OVER (ORDER BY c.idcollier) THEN NULL ELSE c.PrixCollier END AS PrixCollier
-        FROM 
-            colliers AS c 
-            JOIN pendentifs AS p ON p.idCollier = c.idCollier AND p.Nomproduit = c.type_de_produit 
-            JOIN Perles AS po ON p.idPerle = po.idPerle AND p.type_de_produit = po.type_de_produit 
-            JOIN Chaines AS ch ON c.idChaine = ch.idChaine AND ch.type_de_produit = c.NomProduit 
-        ORDER BY 
-            c.idcollier ASC;
-    ''')
 
+    # get request in json file
+    os.chdir('jewelryshop/catalogs')
+    with open('catalogsRequests.json', 'r', encoding='utf-8') as f:
+        catalogs = json.load(f)
+        request = catalogs[title]
+
+    # get headers
+    cur = conn.cursor()
+    get_headers_request = f'SELECT * FROM ({request[:-1]}) AS subquery LIMIT 1;'
+    cur.execute(get_headers_request)
+    results = cur.fetchall()
+    headers = [col.name for col in [header for header in cur.description]]
+    
+    # execute and get results
+    cur.execute(request)
     results = cur.fetchall()
     cur.close()
     conn.close()
 
-title = 'Catalogue Résumé'
-headers = ['NomCollier', 'NomChaine', 'nb_Perle', 'NomPerle', 'PrixCollier']
-
-os.chdir('jewelryshop/catalogs')
+# generate PDF
 with open('template.html', 'r') as f:
     template_string = f.read()
     template = Template(template_string)
     result = template.render(data=results, title=title, headers=headers)
     with open(f'catalogsPDF/{title}.pdf', 'wb') as f:
         pisa.CreatePDF(result, dest=f)
-print('PDF generated')
+    print('PDF generated')

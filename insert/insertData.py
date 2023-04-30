@@ -57,7 +57,7 @@ with SSHTunnelForwarder(
     os.chdir('jewelryshop/insert/dataToInsert')
 
     # 2022
-    to_insert = ['chaines2022', 'colliers2022', 'perles2022', 'pendentifs']
+    to_insert = ['chaines2022', 'perles2022', 'colliers2022','pendentifs']
     insertIntoDBfromMultipleXLSX(to_insert, conn)
 
     # inflation 
