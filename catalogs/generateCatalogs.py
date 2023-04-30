@@ -20,8 +20,8 @@ pg_database = os.getenv('PG_USERNAME')
 pg_user = os.getenv('PG_USERNAME')
 pg_password = os.getenv('PG_USERNAME')
 
-# catalog to generate
-title = 'Catalogue Résumé'
+# catalog to generate/update
+title = 'Catalogue détaillé'
 
 # connexion SSH
 with SSHTunnelForwarder(
