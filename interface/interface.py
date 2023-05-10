@@ -4,55 +4,58 @@ import random
 from urllib.request import urlopen
 from PIL import Image, ImageTk
 from io import BytesIO
+from request import *
 
-def displayData(tree, headers):
+def displayData(tree, headers, data):
     tree["columns"] = headers
     for col in headers:
         tree.heading(col, text=col)
 
     tree.delete(*tree.get_children())
 
-    rows = random.randint(3, 10)
-    for r in range(rows):
-        data = [f"{random.randint(1, 100)}" for _ in range(len(headers))]
-        tree.insert("", "end", values=data)
+    for row in data:
+        tree.insert("", "end", values=row)
+        
+    for col in headers:
+        tree.column(col, width=10)
 
 def productsCatalog():
     frame = tk.Tk()
     frame.title("Fenêtre avec ListBox et tableaux")
-    frame.iconphoto(False, tk_image)
+    frame.geometry("800x600")
 
     listbox_frame = tk.Frame(frame, bg="lightgray", width=200)
     listbox_frame.pack(side="left", fill="y")
 
-    tab_frame = tk.Frame(frame, bg="white")
+    tab_frame = tk.Frame(frame, bg="white", width=600)
     tab_frame.pack(side="right", fill="both", expand=True)
 
     listbox = tk.Listbox(listbox_frame)
     listbox.pack(fill="both", expand=True)
 
-    tables = [
-        ["Header 1", "Header 2", "Header 3"],
-        ["Header 1", "Header 2"],
-        ["Header 1", "Header 2", "Header 3", "Header 4"],
-        ["Header 1"],
-        ["Header 1", "Header 2", "Header 3", "Header 4", "Header 5"]
-    ]
+    sub_menus = {
+        "Chaines" : "select * from chaines;",
+        "Perles" : "select * from perles;",
+        "Colliers" : "select * from colliers;"
+    }
 
-    for i, headers in enumerate(tables):
-        listbox.insert("end", f"Tableau {i+1}")
+    for title in sub_menus.keys():
+        listbox.insert("end", title)
 
     tree = ttk.Treeview(tab_frame, show="headings")
     tree.pack(fill="both", expand=True)
 
     def on_listbox_select(event):
-        index = listbox.curselection()[0]
-        headers = tables[index]
-        displayData(tree, headers)
+        sqlrequest = list(sub_menus.values())[listbox.curselection()[0]]
+        headers = getHeaders(conn, sqlrequest)
+        data = request(conn, sqlrequest)
+        displayData(tree, headers, data)
 
     listbox.bind("<<ListboxSelect>>", on_listbox_select)
 
     frame.mainloop()
+
+conn, tunnel = openConn()
 
 # Create a window for the main menu
 root = tk.Tk()
@@ -78,7 +81,6 @@ image_frame.pack()
 image_label = tk.Label(image_frame, image=tk_image)
 image_label.pack()
 
-
 # Add a title label to the frame
 title_label = tk.Label(title_frame, text="Précieux Comptes Software")
 title_label.config(font=("Copperplate Gothic Light", 20))
@@ -100,3 +102,5 @@ table_button.pack()
 
 # Launch the main window loop
 root.mainloop()
+
+closeConn(conn, tunnel)

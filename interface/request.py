@@ -45,3 +45,11 @@ def request(conn, query):
     results = cur.fetchall()
     cur.close()
     return results
+
+def getHeaders(conn, query):
+    cur = conn.cursor()
+    cur.execute(query)
+    results = cur.fetchall()
+    headers = [col.name for col in [header for header in cur.description]]
+    cur.close()
+    return headers
