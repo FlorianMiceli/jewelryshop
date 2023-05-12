@@ -1,10 +1,37 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import random
 from urllib.request import urlopen
 from PIL import Image, ImageTk
 from io import BytesIO
 from request import *
+
+def on_table_select(event):
+    item = event.widget.selection()[0]
+    values = event.widget.item(item)["values"]
+    print(values)
+    # message box from this window
+    window = tk.Toplevel(root)
+    window.title(values[0])
+
+    if (values[0].split()[0] == "Chaine"):
+        message_label = tk.Label(window, text="Chaine")
+        message_label.pack()
+    elif (values[0].split()[0] == "Perle"):
+        message_label = tk.Label(window, text="Perle")
+        message_label.pack()
+    else :
+        data = request(conn, f"SELECT colliers.nomcollier, CONCAT(perles.nomperle, ' x', pendentifs.nbperle) AS perle_nbperle, chaines.nomchaine FROM colliers JOIN chaines ON (colliers.idchaine = chaines.idchaine) AND (colliers.nomproduit = chaines.typeproduit) JOIN pendentifs ON (colliers.idcollier = pendentifs.idcollier) AND (colliers.typeproduit = pendentifs.nomproduit) JOIN perles ON (pendentifs.idperle = perles.idperle) AND (pendentifs.typeproduit = perles.typeproduit) WHERE colliers.nomcollier = '{values[0]}';")
+        print(data)
+        composition = [perle[1] for perle in data]
+        type_chaine = data[0][2]
+        print(type_chaine)
+        message_label = tk.Label(window, text=f"Composition : {', '.join(composition)}\n Chaine : {type_chaine}")
+        message_label.pack()
+
+    # Create a button to close the window
+    close_button = tk.Button(window, text="Close", command=window.destroy)
+    close_button.pack()
 
 def displayData(tree, headers, data):
     tree["columns"] = headers
@@ -34,9 +61,9 @@ def productsCatalog():
     listbox.pack(fill="both", expand=True)
 
     sub_menus = {
-        "Chaines" : "select * from chaines;",
-        "Perles" : "select * from perles;",
-        "Colliers" : "select * from colliers;"
+        "⛓️ Chaines" : "select nomchaine as Nom, stock, catalogue, prixchaine as Prix from chaines;",
+        "💎 Perles" : "select nomperle as Nom, stock, catalogue, prixperle as Prix from perles;",
+        "💍 Colliers" : "select nomcollier as Nom, catalogue, prixcollier as Prix from colliers;",
     }
 
     for title in sub_menus.keys():
@@ -44,6 +71,7 @@ def productsCatalog():
 
     tree = ttk.Treeview(tab_frame, show="headings")
     tree.pack(fill="both", expand=True)
+    tree.bind("<<TreeviewSelect>>", on_table_select)
 
     def on_listbox_select(event):
         sqlrequest = list(sub_menus.values())[listbox.curselection()[0]]
