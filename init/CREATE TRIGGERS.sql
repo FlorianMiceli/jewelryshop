@@ -152,25 +152,3 @@ $cartes_audit$ LANGUAGE plpgsql;
 CREATE TRIGGER cartes_audit
 AFTER INSERT OR UPDATE OR DELETE ON cartes
 FOR EACH ROW EXECUTE PROCEDURE process_cartes_audit();
-
--- promotions
-CREATE OR REPLACE FUNCTION process_promotions_audit() RETURNS TRIGGER AS 
-$promotions_audit$
-    BEGIN
-        IF (TG_OP = 'DELETE') THEN
-            INSERT INTO promotions_audit SELECT 'D', now(), user, OLD.*;
-            RETURN OLD;
-        ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO promotions_audit SELECT 'U', now(), user, NEW.*;
-            RETURN NEW;
-        ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO promotions_audit SELECT 'I', now(), user, NEW.*;
-            RETURN NEW;
-        END IF;
-        RETURN NULL; -- result is ignored since this is an AFTER trigger
-    END;
-$promotions_audit$ LANGUAGE plpgsql;
-
-CREATE TRIGGER promotions_audit
-AFTER INSERT OR UPDATE OR DELETE ON PROMOTIONS
-FOR EACH ROW EXECUTE PROCEDURE process_promotions_audit();
