@@ -26,8 +26,9 @@ def insertIntoDBfromXLSX(XLSXfilename, conn):
     for row in f.iterrows():
         attributes = ','.join(tuple(f.columns[1:]))
         values = tuple(row[1][1:])
+        # values starting with 'to_timestamp' needs to be without quotes
+        values = str(values).replace('"to_timestamp', 'to_timestamp').replace(')"', ")")
         request = f'INSERT INTO {f.columns[0]} ({attributes}) VALUES {values}'.replace(' nan,', ' NULL,')
-
         print(request)
         cur.execute(request)
     cur.close()
@@ -69,6 +70,10 @@ with SSHTunnelForwarder(
     # 2023
     to_insert = ['chaines2023', 'colliers2023', 'perles2023', 'pendentifs2']
     insertIntoDBfromMultipleXLSX(to_insert, conn)
+
+    # promotions 
+    to_insert = 'promotions'
+    insertIntoDBfromXLSX(to_insert, conn)
 
     conn.commit()
     conn.close()

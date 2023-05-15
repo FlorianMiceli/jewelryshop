@@ -170,7 +170,7 @@ CREATE TABLE CARTES_audit(
 CREATE TABLE PROMOTIONS(
     typeProduit VARCHAR(10),
     nomProduit VARCHAR(50),
-    idProduit Varchar(21),
+    idProduit VARCHAR(21),
     points INT,
     dateDebut timestamp,
     dateFin timestamp,

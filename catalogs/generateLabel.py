@@ -7,6 +7,8 @@ load_dotenv()
 from jinja2 import Template
 from xhtml2pdf import pisa
 import json 
+import barcode
+from barcode.writer import ImageWriter
 
 # creds
 ssh_host = 'ssh2.pgip.universite-paris-saclay.fr'
@@ -21,7 +23,8 @@ pg_user = os.getenv('PG_USERNAME')
 pg_password = os.getenv('PG_USERNAME')
 
 # catalog to generate/update
-title = 'Etat des stock des perles'
+title = 'Etiquette collier'
+nomProduit = 'jonque'
 
 # connexion SSH
 with SSHTunnelForwarder(
@@ -61,11 +64,42 @@ with SSHTunnelForwarder(
     cur.close()
     conn.close()
 
+composition = ''
+for i in range (len(results)):
+    if results[i][0] == nomProduit:
+        produit_index = i
+        composition += results[i][2] + ', '
+        i += 1
+        while results[i][0] == '' :
+            if results[i+1][0] != '' :
+                composition += results[i][2]
+            else :
+                composition += results[i][2] + ', '
+            i += 1
+        break
+
+print('composition :', composition)
+
+prix = results[produit_index][3]
+idProduit = results[produit_index][4]
+chaine = results[produit_index][1] if results[produit_index][1] != '' else 'aucune'
+
+# generate barcode
+options = {
+    'module_width': 0.8,
+    'module_height': 60.0,
+    'quiet_zone': 0,
+    'font_size': 0,
+}
+code128 = barcode.Code128(idProduit, writer=ImageWriter())
+code128.writer.dpi = 300
+filename = code128.save("barcode", options=options)
+
 # generate PDF
-with open('templatePDF.html', 'r') as f:
+with open('templateLabel.html', 'r') as f:
     template_string = f.read()
     template = Template(template_string)
-    result = template.render(data=results, title=title, headers=headers)
+    result = template.render(prix=prix, idProduit=idProduit, composition=composition, chaine=chaine)
     with open(f'catalogsPDF/{title}.pdf', 'wb') as f:
         pisa.CreatePDF(result, dest=f)
     print('PDF generated')

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    text-align: center;
+  }
+  img {
+    display: block;
+    margin: 1 auto;
+    width: 70px;
+  }
+  .price {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .composition {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  .barcode {
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <img src="https://user-images.githubusercontent.com/103659071/234357295-4a152213-161e-4e9d-9bda-73d9d056dbde.jpg" alt="Logo">
+  </header>
+  <div class="price">{{ Prix }}</div>
+  <div class="composition">Composition : {{ composition }}</div>
+  <div class="chaine">Chaine : {{ chaine }}</div>
+  <style>
+    .image {
+      width: 500px; /* largeur souhaitée */
+      height: auto; /* hauteur automatique pour conserver les proportions */
+    }
+  </style>
+  <img class="image" src="barcode.png" alt="barcode">
+</body>
+</html>
