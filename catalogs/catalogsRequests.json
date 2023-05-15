@@ -17,7 +17,7 @@
     "Publicité « avantage »" : "SELECT C.nomCollier, C.prixCollier, (CH.prixChaine + SUM(P.prixPerle * PT.nbPerle)) AS Prix_de_constitution FROM COLLIERS C INNER JOIN CHAINES CH ON C.idChaine = CH.idChaine INNER JOIN PENDENTIFS PT ON C.idCollier = PT.idCollier INNER JOIN PERLES P ON PT.idPerle = P.idPerle GROUP BY C.idCollier, C.nomCollier, C.prixCollier, CH.prixChaine;",
     "Etiquette collier" : "SELECT CASE WHEN c.NomCollier = lag(c.NomCollier) OVER (ORDER BY c.idcollier) THEN '' ELSE c.NomCollier END AS NomCollier, CASE WHEN ch.NomChaine = lag(ch.NomChaine) OVER (ORDER BY c.idcollier) THEN '' ELSE ch.NomChaine END AS NomChaine, CONCAT(nbperle, 'x ',po.NomPerle) AS Perle, CASE WHEN c.PrixCollier = lag(c.PrixCollier) OVER (ORDER BY c.idcollier) THEN NULL ELSE c.PrixCollier END AS PrixCollier, c.idChaine AS idProduit FROM colliers AS c JOIN pendentifs AS p ON p.idCollier = c.idCollier AND p.Nomproduit = c.typeProduit JOIN Perles AS po ON p.idPerle = po.idPerle AND p.typeProduit = po.typeProduit JOIN Chaines AS ch ON c.idChaine = ch.idChaine AND ch.typeProduit = c.nomProduit WHERE ch.NomChaine is not null AND p.nbPerle is not null ORDER BY c.idcollier ASC;",
     "Historique achat" : "SELECT T.idTransaction, T.idClient, C.nomClient, C.prenomClient, T.montant, T.pointsImpliques, T.dateTransac, T.descTransac FROM TRANSACTIONS_LOCALES T INNER JOIN CLIENTS C ON T.idClient = C.idClient ORDER BY T.dateTransac DESC;",
-    "Information fidélité" : "",
+    "Information fidélité" : "SELECT c.idCarte, c.points as Nombre_Points FROM clients c;",
     "Historique fidélité" : "",
     "NombreCollier" : "SELECT count(*) as nombre_colliers from colliers;",
     "Nombre de points par client" : "",
