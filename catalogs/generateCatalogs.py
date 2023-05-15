@@ -21,7 +21,7 @@ pg_user = os.getenv('PG_USERNAME')
 pg_password = os.getenv('PG_USERNAME')
 
 # catalog to generate/update
-title = 'Documentation des symétriques'
+title = 'NombreCollier'
 
 # connexion SSH
 with SSHTunnelForwarder(
