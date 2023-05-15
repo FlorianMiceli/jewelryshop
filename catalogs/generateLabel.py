@@ -64,6 +64,7 @@ with SSHTunnelForwarder(
     cur.close()
     conn.close()
 
+# get composition, prix, idProduit, chaine
 composition = ''
 for i in range (len(results)):
     if results[i][0] == nomProduit:
@@ -77,9 +78,6 @@ for i in range (len(results)):
                 composition += results[i][2] + ', '
             i += 1
         break
-
-print('composition :', composition)
-
 prix = results[produit_index][3]
 idProduit = results[produit_index][4]
 chaine = results[produit_index][1] if results[produit_index][1] != '' else 'aucune'
