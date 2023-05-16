@@ -21,7 +21,7 @@ pg_user = os.getenv('PG_USERNAME')
 pg_password = os.getenv('PG_USERNAME')
 
 # catalog to generate/update
-title = 'Information fidélité'
+title = 'Catalogue ciblé des bijoux par tarif, soutenance'
 
 # connexion SSH
 with SSHTunnelForwarder(

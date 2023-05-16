@@ -24,7 +24,7 @@ pg_password = os.getenv('PG_USERNAME')
 
 # catalog to generate/update
 title = 'Etiquette collier'
-nomProduit = 'jonque'
+nomProduit = 'enfillade'
 
 # connexion SSH
 with SSHTunnelForwarder(

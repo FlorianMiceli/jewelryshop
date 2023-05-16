@@ -27,7 +27,7 @@ endobj
 <<
 /Contents 11 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 10 0 R /Resources <<
 /Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ] /XObject <<
-/FormXob.69b7f29bc9487b58a32017ba9d89946a 3 0 R
+/FormXob.db1d024eef99e04c0d18d674a065bec8 3 0 R
 >>
 >> /Rotate 0 /Trans <<
 
@@ -42,7 +42,7 @@ endobj
 endobj
 7 0 obj
 <<
-/Author () /CreationDate (D:20230516105218-01'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20230516105218-01'00') /Producer (xhtml2pdf <https://github.com/xhtml2pdf/xhtml2pdf/>) 
+/Author () /CreationDate (D:20230516101820-01'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20230516101820-01'00') /Producer (xhtml2pdf <https://github.com/xhtml2pdf/xhtml2pdf/>) 
   /Subject () /Title () /Trapped /False
 >>
 endobj
@@ -53,7 +53,7 @@ endobj
 endobj
 9 0 obj
 <<
-/Dest [ 5 0 R /Fit ] /Parent 8 0 R /Title (NombreCollier)
+/Dest [ 5 0 R /Fit ] /Parent 8 0 R /Title (Liste nouvelles cartes)
 >>
 endobj
 10 0 obj
@@ -63,10 +63,10 @@ endobj
 endobj
 11 0 obj
 <<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 429
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 537
 >>
 stream
-Gat=e92EGZ%"RgF'g;]I4PP-gH0g3G.cnGTXa;2;9!r]tmusR''.+tC[7]K3r]Za$dc0h'ZiIQIVDADlLhgCX)WDu(`+iN,l/hHDGZ<C3$dNu*JUGU'$8YA#38%>%d$3R1,=k9tN_X4mh`c5ng<d@;KOth'GE)-6-,csSLSYMIgH"&5WB3.=S2.jZ`5m:AKdPE0D/S:&ah2,a\1B6br?Rem,7nd$EX4%t\qnlQoFrO,n0L4+:3lBm9MEO%87a8JW>eu'1h;6YB8a\`SOpPp$M:nT'D/JIp!gBD^Ui_hS$uCI%Iq,.T,.9]g]ih0[KG]qG-r8BQ1<"G\4>nE_g%1PC"3*0"9uOk'+g^V7-s,@.ZL1_&.XjF7Ik"E=FM;J:MO.],a]-@Ie]P67M1LnpB-\1U2no8SYht*eR_&>%:t[.^]~>endstream
+Gatn"c*#bS&4ZD>MHRBQ0V7h7[VAt$%8mtt6=Qro,j>cFIJo1#/g9FJ7A<2C&:6P&pi?ul?^Q>D(>s6?lO<n.PQsH*1mBZ_[4GXB/Uqc19jT5b[0:3U#XNd>]bs:AiT80s@7Zd`Ge>1C%@K&ahXj24Xl#%_O0p5Rius((FX:hq[<6dCXkCb;_j?t,$RZ[0je%,BnVXH%8aDXYC>bXS]OS"Jc7Y.WYY7S4:k"#H1sBF`/@Jj2;^`n'0'S5NPUCt,KMipAW=fs9-;$USBo#4qT.H@@]qI8]A`uK6Q8!]A%kl2l*22\JrJnp.4@-@ocLLN=ar_LN^>_?lADe5NPC_V['Q6"TS24GLSg7?7aRm$,^DrL!rdGnXGama?.#]HDUH".QH;%j)DX-S5<LhYn.&(h#+ZFb6<*@L$R"n5E^7D%EMjMlMgpL&T5>Y4ha#5fK*h1fQDcq"Y(K_D$Se^V`XF.JH_#s1JM!s9I(0JB&4Ngt+r77#HA/2XFE)3ap2-m;<\2uWt2nbZd2=?:0q1@TZ*2G'"~>endstream
 endobj
 xref
 0 12
@@ -80,12 +80,12 @@ xref
 0000041073 00000 n 
 0000041325 00000 n 
 0000041396 00000 n 
-0000041475 00000 n 
-0000041535 00000 n 
+0000041484 00000 n 
+0000041544 00000 n 
 trailer
 <<
 /ID 
-[<404e555ea50a452dd4b239510d93fdd7><404e555ea50a452dd4b239510d93fdd7>]
+[<fc2a340d81df9a9c848f308b21fafada><fc2a340d81df9a9c848f308b21fafada>]
 % ReportLab generated PDF document -- digest (http://www.reportlab.com)
 
 /Info 7 0 R
@@ -93,5 +93,5 @@ trailer
 /Size 12
 >>
 startxref
-42055
+42172
 %%EOF
